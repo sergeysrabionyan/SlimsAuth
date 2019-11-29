@@ -1,8 +1,10 @@
 <?php
 
-namespace Api\VkApi;
+namespace App\Api\VkApi;
 
-use Api\AbstractApi;
+use App\Api\AbstractApi;
+use PhpParser\Node\Expr\Variable;
+use Symfony\Component\Dotenv\Dotenv;
 
 
 class VkApi extends AbstractApi
@@ -16,7 +18,14 @@ class VkApi extends AbstractApi
 
     public function __construct()
     {
-     
+        $this->tokenConfig = ['client_id' => $_ENV["VKCLIENTID"],
+            'client_secret' => $_ENV['VKCLIENTSECRET'],
+            'redirect_uri' => $_ENV['VKREDIRECTURI'],
+            'code' => $_GET['code']];
+        $this->userInfoConfig = [
+            'fields' => $_ENV['VKFIELDS'],
+            'v' => $_ENV['VKAPIVERSION']];
+
     }
 
     private function getToken(): ?array
@@ -24,7 +33,6 @@ class VkApi extends AbstractApi
         $token = $this->get(self::tokenUrl, $this->tokenConfig);
         $this->userInfoConfig[self::tokenName] = $token['access_token'];
         $this->userInfoConfig['user_id'] = $token['user_id'];
-
         return $token;
     }
 
@@ -49,7 +57,13 @@ class VkApi extends AbstractApi
 
     public function prepareAuthParams()
     {
-        return [
-        ];
+
+        return ['auth_url' => 'https://oauth.vk.com/authorize',
+            'auth_params' => [
+                'client_id' => $_ENV['VKCLIENTID'],
+                'display' => $_ENV['VKDISPLAY'],
+                'redirect_uri' => $_ENV['VKREDIRECTURI'],
+                'response_type' => $_ENV['VKRESPONSETYPE']
+            ]];
     }
 }

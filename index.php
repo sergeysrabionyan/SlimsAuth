@@ -6,6 +6,6 @@ use Slim\Factory\AppFactory;
 
 require __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/bootstrap/app.php';
-require_once __DIR__ . '/App/routes.php';
+require_once __DIR__ . '/Configs/routes.php';
 
 $app->run();

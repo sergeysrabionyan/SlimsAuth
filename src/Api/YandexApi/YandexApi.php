@@ -1,8 +1,8 @@
 <?php
 
-namespace Api\YandexApi;
+namespace App\Api\YandexApi;
 
-use Api\AbstractApi;
+use App\Api\AbstractApi;
 
 class YandexApi extends AbstractApi
 {

@@ -1,8 +1,6 @@
 <?php
 
-namespace Api;
-
-
+namespace App\Api;
 
 
 abstract class AbstractApi
