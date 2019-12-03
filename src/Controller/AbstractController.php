@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Api\YandexApi\YandexApi;
+use App\Models\Articles;
 use App\Models\Users;
 use App\Services\UsersAuthService;
 use DI\Container;
@@ -33,8 +34,9 @@ abstract class AbstractController
      */
     protected $yandex;
 
-    public function __construct(Container $container, VkApi $vkApi, Users $users, YandexApi $yandex)
+    public function __construct(Articles $articles, Container $container, VkApi $vkApi, Users $users, YandexApi $yandex)
     {
+        $this->articles = $articles;
         $this->yandex = $yandex;
         $this->view = $container->get('view');
         $this->vk = $vkApi;

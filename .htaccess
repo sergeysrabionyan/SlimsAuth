@@ -1,8 +1,6 @@
 RewriteEngine On
+RewriteBase /
+RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
+RewriteRule ^ %1 [L,NE,R=302]
 
-RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteCond %{SCRIPT_FILENAME} !-f
-
-RewriteRule ^(.*)$ ./index.php [QSA,L]
-
-
+RewriteRule ^((?!public/).*)$ public/$1 [L,NC]

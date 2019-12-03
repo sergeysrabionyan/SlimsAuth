@@ -40,10 +40,8 @@ class VkApi extends AbstractApi
 
         if (isset($userInfo['response'][0]['id'])) {
             $userInfo = $userInfo['response'][0];
-        };
-
+        }
         return $userInfo;
-
     }
 
     public function authenticate(): ?array
@@ -55,7 +53,6 @@ class VkApi extends AbstractApi
 
     public function prepareAuthParams()
     {
-
         return ['auth_url' => 'https://oauth.vk.com/authorize',
             'auth_params' => [
                 'client_id' => $_ENV['VKCLIENTID'],

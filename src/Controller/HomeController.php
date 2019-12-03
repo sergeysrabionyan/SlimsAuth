@@ -15,7 +15,9 @@ class HomeController extends AbstractController
         if ($this->user) {
             $vkapi = $this->vk->getAuthUrl();
             $yandexApi = $this->yandex->getAuthUrl();
-            $content = $this->view->render('pageMain.twig', ['user' => $this->user, 'vkApi' => $vkapi, 'yandexApi' => $yandexApi]);
+            $information = $this->articles->findComment($this->user['id']);
+            $jsoninfo = json_encode($information);
+            $content = $this->view->render('pageMain.twig', ['information' => $jsoninfo, 'user' => $this->user, 'vkApi' => $vkapi, 'yandexApi' => $yandexApi]);
             $response->getBody()->write($content);
             return $response;
         } else {

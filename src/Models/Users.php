@@ -149,7 +149,6 @@ class Users
 
     }
 
-
     public function validation($login, $password)
     {
         if (empty($login)) {
@@ -174,6 +173,4 @@ class Users
 
         return $passwordHash;
     }
-
-
 }

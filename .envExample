@@ -1,0 +1,21 @@
+########### Vk
+VKCLIENTID=""
+VKDISPLAY="page"
+VKREDIRECTURI=""
+VKRESPONSETYPE="code"
+VKCLIENTSECRET=""
+VKFIELDS="id,first_name,last_name,screen_name,sex,bdate,photo_big"
+VKAPIVERSION=""
+
+########## Yandex
+YANDEXID=""
+YANDEXPASSWORD=""
+
+
+########## DbParams
+
+HOST=""
+DBNAME=""
+USER ="",
+PASSWORD ="",
+DRIVER ="pdo_mysql",

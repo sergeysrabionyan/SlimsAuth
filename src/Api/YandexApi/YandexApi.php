@@ -3,6 +3,7 @@
 namespace App\Api\YandexApi;
 
 use App\Api\AbstractApi;
+use App\Exception\InvalidConnectException;
 
 class YandexApi extends AbstractApi
 {
@@ -22,6 +23,7 @@ class YandexApi extends AbstractApi
     }
     private function getToken(): ?array
     {
+
         $token = $this->post(self::tokenUrl, $this->tokenConfig);
         $this->userInfoConfig[self::tokenName] = $token['access_token'];
         return $token;
