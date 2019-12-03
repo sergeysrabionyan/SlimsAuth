@@ -1,0 +1,18 @@
+{% include 'header.html.twig' %}
+<div style="text-align: center;">
+    <h1>Вход</h1>
+    <h1></h1>
+    <form action="/plus" method="post">
+        <button type="submit">+1</button>
+    </form>
+    <form action="logout" method="post">
+        <button type="submit">Выход</button>
+    </form>
+    {% if not user.vk_id %}
+        <p><a href={{ vkApi }}>Привязать Вконтакте</a></p>
+    {% endif %}
+    {% if not user.yandex_id %}
+        <p><a href={{ yandexApi }}>Привязать Яндекс</a></p>
+    {% endif %}
+</div>
+{% include 'footer.html.twig' %}

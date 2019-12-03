@@ -3,21 +3,22 @@
 
 namespace App\Services;
 
-
-use App\DB\Db;
-use Doctrine\DBAL\Driver\IBMDB2\DB2Connection;
+use App\Models\Users;
+use DI\Container;
 
 class UsersAuthService
 {
 
-
-    public static function createToken(array $user, $token): void
+    public static function createToken($id)
     {
-        $token = $user['id'] . ':' . $token;
-        setcookie('token', $token, 0, '/', '', false, true);
+        $token = UsersAuthService::refreshAuthToken();
+
+        $tokenUp = $id . ':' . $token;
+        setcookie('token', $tokenUp, 0, '/', '', false, true);
+        return $token;
     }
 
-    public static function getUserByToken(Db $db)
+    public static function getUserByToken(Users $users)
     {
         $token = $_COOKIE['token'] ?? '';
 
@@ -26,14 +27,12 @@ class UsersAuthService
         }
 
         [$userId, $authToken] = explode(':', $token, 2);
-        var_dump($userId);
-        $user = User::getById((int)$userId);
-
+        $user = $users->getById($userId);
         if ($user === null) {
             return null;
         }
 
-        if ($user->getAuthToken() !== $authToken) {
+        if ($user['token'] !== $authToken) {
             return null;
         }
 

@@ -6,7 +6,6 @@ use App\Api\AbstractApi;
 use PhpParser\Node\Expr\Variable;
 use Symfony\Component\Dotenv\Dotenv;
 
-
 class VkApi extends AbstractApi
 {
     CONST tokenUrl = 'https://oauth.vk.com/access_token';
@@ -14,7 +13,6 @@ class VkApi extends AbstractApi
     CONST tokenName = 'access_token';
     private $tokenConfig = [];
     private $userInfoConfig = [];
-
 
     public function __construct()
     {

@@ -3,23 +3,44 @@
 
 namespace App\Controller;
 
-
+use App\Api\YandexApi\YandexApi;
+use App\Models\Users;
+use App\Services\UsersAuthService;
+use DI\Container;
+use Doctrine\DBAL\Connection;
 use App\Api\VkApi\VkApi;
-use App\DB\Db;
-use Doctrine\DBAL\DriverManager;
+use Twig\Environment;
 
 abstract class AbstractController
 {
+    /**
+     * @var VkApi
+     */
     protected $vk;
+    /**
+     * @var Environment $view
+     */
     protected $view;
+    /**
+     * @var Connection $db
+     */
     protected $db;
+    protected $container;
+    protected $users;
+    protected $user;
+    /**
+     * @var YandexApi $yandex
+     */
+    protected $yandex;
 
-    public function __construct(VkApi $vkApi, Db $db)
+    public function __construct(Container $container, VkApi $vkApi, Users $users, YandexApi $yandex)
     {
-        $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../../templates');
-        $twig = new \Twig\Environment($loader, ['cache' => false]);
-        $this->view = $twig;
+        $this->yandex = $yandex;
+        $this->view = $container->get('view');
         $this->vk = $vkApi;
-        $this->db = new Db();
+        $this->db = $container->get('db');
+        $this->container = $container;
+        $this->users = $users;
+        $this->user = UsersAuthService::getUserByToken($this->users);
     }
 }

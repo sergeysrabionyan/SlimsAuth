@@ -1,0 +1,20 @@
+{% include 'header.html.twig' %}
+<div style="text-align: center;">
+    <h1>Вход</h1>
+    {% if  errors %}
+        <div style="background-color: red;padding: 5px;margin: 15px">{{ errors }}</div>
+    {% endif %}
+    <form action="login" method="post">
+        <label>Логин <input type="text" name="login" value="{{ params.login }}"></label>
+        <br><br>
+        <label>Пароль <input type="password" name="password"></label>
+        <br><br>
+        <button type="submit">Вход</button>
+    </form>
+    <form action="register" method="get">
+        <button type="submit">Зарегаться</button>
+    </form>
+        <p><a href={{ vkApi }}>Аутентификация через ВКонтакте</a></p>
+        <p><a href={{ yandexApi }}>Аутентификация через Яндекс</a></p>
+</div>
+{% include 'footer.html.twig' %}

@@ -12,19 +12,20 @@ class YandexApi extends AbstractApi
     private $tokenConfig = [];
     private $userInfoConfig = [];
 
-    public function __construct(array $tokenConfig, array $userInfoConfig)
+    public function __construct()
     {
-        $this->tokenConfig = $tokenConfig;
-        $this->userInfoConfig = $userInfoConfig;
+        $this->tokenConfig = ['grant_type' => 'authorization_code',
+            'code' => $_GET['code'],
+            'client_id' => $_ENV["YANDEXID"],
+            'client_secret' => $_ENV["YANDEXPASSWORD"]];
+        $this->userInfoConfig = ['format' => 'json'];;
     }
-
     private function getToken(): ?array
     {
         $token = $this->post(self::tokenUrl, $this->tokenConfig);
         $this->userInfoConfig[self::tokenName] = $token['access_token'];
         return $token;
     }
-
     private function getUserInfo(): ?array
     {
         $userInfo = $this->get(self::userUrl, $this->userInfoConfig);
@@ -33,19 +34,19 @@ class YandexApi extends AbstractApi
         }
         return $userInfo;
     }
-
     public function authenticate(): ?array
     {
         $this->getToken();
         $result = $this->getUserInfo();
         return $result;
     }
-
     public function prepareAuthParams()
     {
-        return [
-
-
-        ];
+        return ['auth_url' => 'https://oauth.yandex.ru/authorize',
+            'auth_params' => [
+                'response_type' => 'code',
+                'client_id' => $_ENV['YANDEXID'],
+                'display' => 'popup'
+            ]];
     }
 }
